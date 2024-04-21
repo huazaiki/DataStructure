@@ -78,3 +78,39 @@ void ShellSort(int A[], int n) {
         }
     }
 }
+
+/**********************************************
+ * 
+ *                  快速排序
+ * 
+ **********************************************/
+
+/**
+ * @brief 划分操作
+ * 
+ * @param A 操作的数组(子数组)
+ * @param low 
+ * @param high 
+ * @return int 划分元素的下表，根据这个下标递归
+ */
+int Partition(ELemType A[], int low, int high) {
+    ELemType pivot = A[low];
+    while (low < high)  // pivot成为分界点，pivot左边的元素 < pivot; pivot右边的元素 >= pivot
+    {
+        while(A[high] >= pivot && low < high) --high;   // 从右向左遍历，找到第一个小于pivot的元素
+        A[low] = A[high];
+        while(A[low] < pivot && low < high) ++low;  // 从左向右遍历，找到第一个大于等于pivot的元素
+        A[high] = A[low];
+    }
+    A[low] = pivot; // 将此次划分的基准元素放到low指向的地方
+    return low;
+}
+
+void QuickSort(ELemType A[], int low, int high) {
+    if (low < high)
+    {
+        int pivotpos = Partition(A, low, high);
+        QuickSort(A, low, pivotpos - 1);
+        QuickSort(A, pivotpos + 1, high);
+    }
+}
